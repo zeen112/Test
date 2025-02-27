@@ -19,6 +19,9 @@
             </div>
             <h1 class="text-2xl font-bold tracking-tight">Zeebase</h1>
           </div>
+            <button @click="importExcel()" class="nav-link p-2 font-medium transition">
+  <i class="fas fa-file-import mr-2"></i> Import Excel
+            </button>
           <div class="hidden md:flex items-center space-x-6">
             <button @click="activeTab = 'dashboard'" :class="{'nav-link active font-semibold': activeTab === 'dashboard'}" class="nav-link p-2 font-medium transition">
               <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
@@ -507,9 +510,9 @@
                   <p class="text-sm text-gray-600 mb-4 line-clamp-2" x-text="category.description"></p>
                   <div class="flex justify-between items-center pt-4 border-t">
                     <button @click="viewCategoryItems(category.id)" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
-                      <i class="fas fa-list mr-1"></i> Lihat Barang
-                    </button>
-                    <div class="flex items-center space-x-3">
+  <i class="fas fa-list mr-1"></i> Lihat Barang
+</button>
+                      <div class="flex items-center space-x-3">
                       <button @click="editCategory(index)" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
                         <i class="fas fa-edit mr-1"></i> Edit
                       </button>
