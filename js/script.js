@@ -367,3 +367,52 @@ function inventoryApp() {
     },
   };
 }
+
+// Tambahkan fungsi ini di dalam objek inventoryApp
+importExcel() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".xlsx, .xls";
+  input.onchange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet);
+
+        // Proses data JSON dan tambahkan ke items
+        json.forEach((item) => {
+          this.items.push({
+            id: this.generateId(),
+            name: item.Nama || "",
+            category: item.Kategori || "",
+            price: item.Harga || 0,
+            stock: item.Stok || 0,
+            description: item.Deskripsi || "",
+          });
+        });
+
+        this.saveToLocalStorage();
+        alert("Data berhasil diimpor!");
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  input.click();
+},
+// Tambahkan fungsi ini di dalam objek inventoryApp
+viewCategoryItems(categoryId) {
+  const itemsInCategory = this.items.filter((item) => item.category === categoryId);
+  const categoryName = this.categories.find((cat) => cat.id === categoryId)?.name || "Unknown";
+
+  let message = `Barang dalam kategori ${categoryName}:\n\n`;
+  itemsInCategory.forEach((item) => {
+    message += `- ${item.name}\n`;
+  });
+
+  alert(message);
+},
